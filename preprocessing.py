@@ -30,6 +30,11 @@ c) Misrepresenting the service provided.
 d) Charging for a more complex or expensive service than was actually provided.
 e) Billing for a covered service when the service actually provided was not covered.
 
+Idea on preprocessing training data
+1) Combine inpatient and outpatient data with label for inpatient = 1, outpatient = 0
+2) Add label from training data indicating if claim was potentially fraudulent
+3)
+
 """
 
 # Reading in datasets
