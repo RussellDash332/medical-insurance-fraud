@@ -52,3 +52,4 @@ test_label = pd.read_csv('data/Test-1542969243754.csv')
 train_inpatient['inpatient'] = 1
 train_outpatient['inpatient'] = 0
 train = pd.concat([train_inpatient, train_outpatient], axis=0, sort=False)
+train.merge(train_label, on='Provider', how='left')
