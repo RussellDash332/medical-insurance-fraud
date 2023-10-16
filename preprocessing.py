@@ -29,6 +29,7 @@ b) Duplicate submission of a claim for the same service.
 c) Misrepresenting the service provided.
 d) Charging for a more complex or expensive service than was actually provided.
 e) Billing for a covered service when the service actually provided was not covered.
+** NOTE: The labels for the test set are not provided, rather it can be assumed that all the providers (UID) given in the file are all potential fraudsters.
 
 Idea on preprocessing training data
 1) Combine inpatient and outpatient data with label for inpatient = 1, outpatient = 0
@@ -53,3 +54,11 @@ train_inpatient['inpatient'] = 1
 train_outpatient['inpatient'] = 0
 train = pd.concat([train_inpatient, train_outpatient], axis=0, sort=False)
 train.merge(train_label, on='Provider', how='left')
+
+# Combine test datasets
+test_inpatient['inpatient'] = 1
+test_outpatient['inpatient'] = 0
+test = pd.concat([test_inpatient, test_outpatient], axis=0, sort=False)
+test_label['PotentialFraud'] = 1
+test.merge(test_label, on='Provider', how='left')
+test["PotentialFraud"] = test["PotentialFraud"].fillna(0)
