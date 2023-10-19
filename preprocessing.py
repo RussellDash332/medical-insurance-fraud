@@ -29,7 +29,7 @@ b) Duplicate submission of a claim for the same service.
 c) Misrepresenting the service provided.
 d) Charging for a more complex or expensive service than was actually provided.
 e) Billing for a covered service when the service actually provided was not covered.
-** NOTE: The labels for the test set are not provided, rather it can be assumed that all the providers (UID) given in the file are all potential fraudsters.
+** NOTE: The labels for the test set are not provided, rather it can be assumed that all the providers (UID) given in the file are all potential fraudsters
 
 Idea on preprocessing training data
 1) Combine inpatient and outpatient data with label for inpatient = 1, outpatient = 0
