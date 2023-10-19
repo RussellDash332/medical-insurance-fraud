@@ -39,15 +39,15 @@ Idea on preprocessing training data
 """
 
 # Reading in datasets
-train_inpatient = pd.read_csv('data/Train_Inpatientdata-1542865627584.csv')
-train_outpatient = pd.read_csv('data/Train_Outpatientdata-1542865627584.csv')
-train_beneficiary = pd.read_csv('data/Train_Beneficiarydata-1542865627584.csv')
-train_label = pd.read_csv('data/Train-1542865627584.csv')
+train_inpatient = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\data\fraud_detection_data\Train_Inpatientdata-1542865627584.csv')
+train_outpatient = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\data\fraud_detection_data\Train_Outpatientdata-1542865627584.csv')
+train_beneficiary = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\data\fraud_detection_data\Train_Beneficiarydata-1542865627584.csv')
+train_label = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\data\fraud_detection_data\Train-1542865627584.csv')
 
-test_inpatient = pd.read_csv('data/Test_Inpatientdata-1542969243754.csv')
-test_outpatient = pd.read_csv('data/Test_Outpatientdata-1542969243754.csv')
-test_beneficiary = pd.read_csv('data/Test_Beneficiarydata-1542969243754.csv')
-test_label = pd.read_csv('data/Test-1542969243754.csv')
+test_inpatient = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\data\fraud_detection_data\Test_Inpatientdata-1542969243754.csv')
+test_outpatient = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\data\fraud_detection_data\Test_Outpatientdata-1542969243754.csv')
+test_beneficiary = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\data\fraud_detection_data\Test_Beneficiarydata-1542969243754.csv')
+test_label = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\data\fraud_detection_data\Test-1542969243754.csv')
 
 # Combine training datasets
 train_inpatient['inpatient'] = 1
@@ -60,5 +60,12 @@ test_inpatient['inpatient'] = 1
 test_outpatient['inpatient'] = 0
 test = pd.concat([test_inpatient, test_outpatient], axis=0, sort=False)
 test_label['PotentialFraud'] = 1
-test.merge(test_label, on='Provider', how='left')
-test["PotentialFraud"] = test["PotentialFraud"].fillna(0)
+test['PotentialFraud'] = 1
+
+for (i,row) in test.iterrows():
+    if row['Provider'] not in test_label['Provider']:
+        row['PotentialFraud'] = 0
+
+#Export train and test datasets
+train.to_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\processed_data\train.csv')
+test.to_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\processed_data\test.csv')
