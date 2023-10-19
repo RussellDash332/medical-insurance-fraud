@@ -49,11 +49,27 @@ test_outpatient = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S
 test_beneficiary = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\data\fraud_detection_data\Test_Beneficiarydata-1542969243754.csv')
 test_label = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\data\fraud_detection_data\Test-1542969243754.csv')
 
+#Replacing 2 with 0 for chronic conditions ,that means chroniv condition No is 0 and yes is 1
+train_beneficiary = train_beneficiary.replace({'ChronicCond_Alzheimer': 2, 'ChronicCond_Heartfailure': 2, 'ChronicCond_KidneyDisease': 2,
+                           'ChronicCond_Cancer': 2, 'ChronicCond_ObstrPulmonary': 2, 'ChronicCond_Depression': 2, 
+                           'ChronicCond_Diabetes': 2, 'ChronicCond_IschemicHeart': 2, 'ChronicCond_Osteoporasis': 2, 
+                           'ChronicCond_rheumatoidarthritis': 2, 'ChronicCond_stroke': 2 }, 0)
+
+train_beneficiary = train_beneficiary.replace({'RenalDiseaseIndicator': 'Y'}, 1)
+
+test_beneficiary = test_beneficiary.replace({'ChronicCond_Alzheimer': 2, 'ChronicCond_Heartfailure': 2, 'ChronicCond_KidneyDisease': 2,
+                           'ChronicCond_Cancer': 2, 'ChronicCond_ObstrPulmonary': 2, 'ChronicCond_Depression': 2, 
+                           'ChronicCond_Diabetes': 2, 'ChronicCond_IschemicHeart': 2, 'ChronicCond_Osteoporasis': 2, 
+                           'ChronicCond_rheumatoidarthritis': 2, 'ChronicCond_stroke': 2 }, 0)
+
+test_beneficiary = test_beneficiary.replace({'RenalDiseaseIndicator': 'Y'}, 1)
+
 # Combine training datasets
 train_inpatient['inpatient'] = 1
 train_outpatient['inpatient'] = 0
 train = pd.concat([train_inpatient, train_outpatient], axis=0, sort=False)
 train.merge(train_label, on='Provider', how='left')
+train_alldata=pd.merge(train,train_beneficiary,left_on='BeneID',right_on='BeneID',how='inner')
 
 # Combine test datasets
 test_inpatient['inpatient'] = 1
@@ -61,11 +77,12 @@ test_outpatient['inpatient'] = 0
 test = pd.concat([test_inpatient, test_outpatient], axis=0, sort=False)
 test_label['PotentialFraud'] = 1
 test['PotentialFraud'] = 1
+test_alldata=pd.merge(test,test_beneficiary,left_on='BeneID',right_on='BeneID',how='inner')
 
 for (i,row) in test.iterrows():
     if row['Provider'] not in test_label['Provider']:
         row['PotentialFraud'] = 0
 
 #Export train and test datasets
-train.to_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\processed_data\train.csv')
-test.to_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\processed_data\test.csv')
+train_alldata.to_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\processed_data\train.csv')
+test_all.to_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\processed_data\test.csv')
