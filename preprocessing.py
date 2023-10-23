@@ -38,6 +38,8 @@ Idea on preprocessing training data
 
 """
 
+#This code combines Inpatient, Outpatient, Beneficiary and Provider data together (Dataset 1,2,3)
+
 # Reading in datasets
 train_inpatient = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\data\fraud_detection_data\Train_Inpatientdata-1542865627584.csv')
 train_outpatient = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\data\fraud_detection_data\Train_Outpatientdata-1542865627584.csv')
@@ -121,6 +123,15 @@ test_alldata=pd.merge(test,test_beneficiary,left_on='BeneID',right_on='BeneID',h
 train_allprovider=pd.merge(train_label,train_alldata,on='Provider')
 test_allprovider=pd.merge(test_label,test_alldata,on='Provider')
 
+#Removing unecessary columns
+train_allprovider=train_allprovider.drop(['NoOfMonths_PartACov', 'NoOfMonths_PartBCov', 'State', 'County', 'AttendingPhysician',
+       'OperatingPhysician', 'OtherPhysician', 'DiagnosisGroupCode'],axis=1)
+
+test_allprovider=test_allprovider.drop(['NoOfMonths_PartACov', 'NoOfMonths_PartBCov', 'State', 'County', 'AttendingPhysician',
+       'OperatingPhysician', 'OtherPhysician', 'DiagnosisGroupCode'],axis=1)
+
+#Add code to combine with remaining datasets here
+
 #Export train and test datasets
-train_allprovider.to_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\processed_data\train.csv')
-test_allprovider.to_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\processed_data\test.csv')
+#train_allprovider.to_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\processed_data\train.csv')
+#test_allprovider.to_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\processed_data\test.csv')
