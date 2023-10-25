@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
 
 """
 DATASET INFORMATION 
@@ -38,20 +39,20 @@ Idea on preprocessing training data
 
 """
 
-#This code combines Inpatient, Outpatient, Beneficiary and Provider data together (Dataset 1,2,3)
+# This code combines Inpatient, Outpatient, Beneficiary and Provider data together (Dataset 1,2,3)
 
 # Reading in datasets
-train_inpatient = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\data\fraud_detection_data\Train_Inpatientdata-1542865627584.csv')
-train_outpatient = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\data\fraud_detection_data\Train_Outpatientdata-1542865627584.csv')
-train_beneficiary = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\data\fraud_detection_data\Train_Beneficiarydata-1542865627584.csv')
-train_label = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\data\fraud_detection_data\Train-1542865627584.csv')
+train_inpatient = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Train_Inpatientdata-1542865627584.csv'))
+train_outpatient = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Train_Outpatientdata-1542865627584.csv'))
+train_beneficiary = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Train_Beneficiarydata-1542865627584.csv'))
+train_label = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Train-1542865627584.csv'))
 
-test_inpatient = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\data\fraud_detection_data\Test_Inpatientdata-1542969243754.csv')
-test_outpatient = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\data\fraud_detection_data\Test_Outpatientdata-1542969243754.csv')
-test_beneficiary = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\data\fraud_detection_data\Test_Beneficiarydata-1542969243754.csv')
-test_label = pd.read_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\data\fraud_detection_data\Test-1542969243754.csv')
+test_inpatient = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Test_Inpatientdata-1542969243754.csv'))
+test_outpatient = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Test_Outpatientdata-1542969243754.csv'))
+test_beneficiary = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Test_Beneficiarydata-1542969243754.csv'))
+test_label = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Test-1542969243754.csv'))
 
-##Replacing 2 with 0 for chronic conditions ,that means chroniv condition No is 0 and yes is 1
+## Replacing 2 with 0 for chronic conditions ,that means chroniv condition No is 0 and yes is 1
 train_beneficiary = train_beneficiary.replace({'ChronicCond_Alzheimer': 2, 'ChronicCond_Heartfailure': 2, 'ChronicCond_KidneyDisease': 2,
                            'ChronicCond_Cancer': 2, 'ChronicCond_ObstrPulmonary': 2, 'ChronicCond_Depression': 2, 
                            'ChronicCond_Diabetes': 2, 'ChronicCond_IschemicHeart': 2, 'ChronicCond_Osteoporasis': 2, 
@@ -70,7 +71,7 @@ test_beneficiary = test_beneficiary.replace({'RenalDiseaseIndicator': 'Y'}, 1)
 train_inpatient['inpatient'] = 1
 train_outpatient['inpatient'] = 0
 #train = pd.concat([train_inpatient, train_outpatient], axis=0, sort=False)
-train=pd.merge(train_outpatient,train_inpatient,
+train = pd.merge(train_outpatient,train_inpatient,
                               left_on=['BeneID', 'ClaimID', 'ClaimStartDt', 'ClaimEndDt', 'Provider',
        'InscClaimAmtReimbursed', 'AttendingPhysician', 'OperatingPhysician',
        'OtherPhysician', 'ClmDiagnosisCode_1', 'ClmDiagnosisCode_2',
@@ -96,7 +97,7 @@ train_alldata=pd.merge(train,train_beneficiary,left_on='BeneID',right_on='BeneID
 #Combining test data
 test_inpatient['inpatient'] = 1
 test_outpatient['inpatient'] = 0
-test=pd.merge(test_outpatient,test_inpatient,
+test = pd.merge(test_outpatient,test_inpatient,
                               left_on=['BeneID', 'ClaimID', 'ClaimStartDt', 'ClaimEndDt', 'Provider',
        'InscClaimAmtReimbursed', 'AttendingPhysician', 'OperatingPhysician',
        'OtherPhysician', 'ClmDiagnosisCode_1', 'ClmDiagnosisCode_2',
@@ -117,21 +118,21 @@ test=pd.merge(test_outpatient,test_inpatient,
        'ClmAdmitDiagnosisCode']
                               ,how='outer')
 
-test_alldata=pd.merge(test,test_beneficiary,left_on='BeneID',right_on='BeneID',how='inner')
+test_alldata = pd.merge(test,test_beneficiary,left_on='BeneID',right_on='BeneID',how='inner')
 
-#Merging with Provider
-train_allprovider=pd.merge(train_label,train_alldata,on='Provider')
-test_allprovider=pd.merge(test_label,test_alldata,on='Provider')
+# Merging with Provider
+train_allprovider = pd.merge(train_label,train_alldata,on='Provider')
+test_allprovider = pd.merge(test_label,test_alldata,on='Provider')
 
-#Removing unecessary columns
-train_allprovider=train_allprovider.drop(['NoOfMonths_PartACov', 'NoOfMonths_PartBCov', 'State', 'County', 'AttendingPhysician',
+# Removing unecessary columns
+train_allprovider = train_allprovider.drop(['NoOfMonths_PartACov', 'NoOfMonths_PartBCov', 'State', 'County', 'AttendingPhysician',
        'OperatingPhysician', 'OtherPhysician', 'DiagnosisGroupCode'],axis=1)
 
-test_allprovider=test_allprovider.drop(['NoOfMonths_PartACov', 'NoOfMonths_PartBCov', 'State', 'County', 'AttendingPhysician',
+test_allprovider = test_allprovider.drop(['NoOfMonths_PartACov', 'NoOfMonths_PartBCov', 'State', 'County', 'AttendingPhysician',
        'OperatingPhysician', 'OtherPhysician', 'DiagnosisGroupCode'],axis=1)
 
-#Add code to combine with remaining datasets here
+# Add code to combine with remaining datasets here
 
-#Export train and test datasets
-#train_allprovider.to_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\processed_data\train.csv')
-#test_allprovider.to_csv(r'C:\Users\aengu\OneDrive\Desktop\school_stuff\Y4S1\DSA4262\medical-insurance-fraud\processed_data\test.csv')
+# Export train and test datasets
+#train_allprovider.to_csv(os.path.join(os.getcwd(), 'processed_data', 'train.csv'))
+#test_allprovider.to_csv(os.path.join(os.getcwd(), 'processed_data', 'test.csv'))
