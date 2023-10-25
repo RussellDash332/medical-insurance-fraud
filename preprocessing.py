@@ -42,15 +42,15 @@ Idea on preprocessing training data
 # This code combines Inpatient, Outpatient, Beneficiary and Provider data together (Dataset 1,2,3)
 
 # Reading in datasets
-train_inpatient = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Train_Inpatientdata-1542865627584.csv'))
-train_outpatient = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Train_Outpatientdata-1542865627584.csv'))
-train_beneficiary = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Train_Beneficiarydata-1542865627584.csv'))
-train_label = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Train-1542865627584.csv'))
+train_inpatient = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Train_Inpatientdata.csv'))
+train_outpatient = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Train_Outpatientdata.csv'))
+train_beneficiary = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Train_Beneficiarydata.csv'))
+train_label = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Train.csv'))
 
-test_inpatient = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Test_Inpatientdata-1542969243754.csv'))
-test_outpatient = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Test_Outpatientdata-1542969243754.csv'))
-test_beneficiary = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Test_Beneficiarydata-1542969243754.csv'))
-test_label = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Test-1542969243754.csv'))
+test_inpatient = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Test_Inpatientdata.csv'))
+test_outpatient = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Test_Outpatientdata.csv'))
+test_beneficiary = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Test_Beneficiarydata.csv'))
+test_label = pd.read_csv(os.path.join(os.getcwd(), 'data', 'fraud_detection_data', 'Test.csv'))
 
 ## Replacing 2 with 0 for chronic conditions ,that means chroniv condition No is 0 and yes is 1
 train_beneficiary = train_beneficiary.replace({'ChronicCond_Alzheimer': 2, 'ChronicCond_Heartfailure': 2, 'ChronicCond_KidneyDisease': 2,
