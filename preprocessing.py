@@ -80,7 +80,7 @@ train = pd.merge(train_outpatient,train_inpatient,
        'ClmDiagnosisCode_9', 'ClmDiagnosisCode_10', 'ClmProcedureCode_1',
        'ClmProcedureCode_2', 'ClmProcedureCode_3', 'ClmProcedureCode_4',
        'ClmProcedureCode_5', 'ClmProcedureCode_6', 'DeductibleAmtPaid',
-       'ClmAdmitDiagnosisCode'],
+       'ClmAdmitDiagnosisCode','inpatient'],
                               right_on=['BeneID', 'ClaimID', 'ClaimStartDt', 'ClaimEndDt', 'Provider',
        'InscClaimAmtReimbursed', 'AttendingPhysician', 'OperatingPhysician',
        'OtherPhysician', 'ClmDiagnosisCode_1', 'ClmDiagnosisCode_2',
@@ -89,7 +89,7 @@ train = pd.merge(train_outpatient,train_inpatient,
        'ClmDiagnosisCode_9', 'ClmDiagnosisCode_10', 'ClmProcedureCode_1',
        'ClmProcedureCode_2', 'ClmProcedureCode_3', 'ClmProcedureCode_4',
        'ClmProcedureCode_5', 'ClmProcedureCode_6', 'DeductibleAmtPaid',
-       'ClmAdmitDiagnosisCode']
+       'ClmAdmitDiagnosisCode','inpatient']
                               ,how='outer')
 
 train_alldata=pd.merge(train,train_beneficiary,left_on='BeneID',right_on='BeneID',how='inner')
