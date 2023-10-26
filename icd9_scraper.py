@@ -11,6 +11,7 @@ def scrape(url, filename, label=''):
     df = pd.read_html(r.content)[0]
     converter = {c:str for c in df.columns}
 
+    # todo: change to queue system (BFS) instead of recursive (DFS) so can be multithreaded
     def scrape_util(sub_url='', contents=[]):
         r = requests.get(urljoin(url, sub_url))
         assert r.ok
