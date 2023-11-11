@@ -38,8 +38,8 @@ def scrape(url, filename, label=''):
 
 with ThreadPoolExecutor(max_workers=2) as executor:
     futures = [
-        executor.submit(scrape, 'https://dexur.com/icd9/', os.path.join(os.getcwd(), 'medical_codes_data', 'icd9_diagnosis.csv'), 'diagnosis'),
-        executor.submit(scrape, 'https://dexur.com/pcs9/', os.path.join(os.getcwd(), 'medical_codes_data', 'icd9_procedure.csv'), 'procedure')
+        executor.submit(scrape, 'https://dexur.com/icd9/', os.path.join(os.getcwd(), 'processed_data', 'icd9_diagnosis.csv'), 'diagnosis'),
+        executor.submit(scrape, 'https://dexur.com/pcs9/', os.path.join(os.getcwd(), 'processed_data', 'icd9_procedure.csv'), 'procedure')
     ]
     for f in as_completed(futures):
         print(f.result())
