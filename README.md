@@ -8,6 +8,6 @@ Datasets:
 Hidden datasets (within `processed_data/`):
 
 - `icd9_diagnosis.csv`, obtained from running `icd9_scraper.py`
-- `icd9_scraper.csv`, obtained from running `icd9_scraper.py`
+- `icd9_procedure.csv`, obtained from running `icd9_scraper.py`
 - `final_training_set.csv`, obtained from running `preprocessing_train.ipynb`
 - `final_test_set.csv`, obtained from running `preprocessing_test.ipynb`
